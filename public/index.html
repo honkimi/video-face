@@ -5,24 +5,85 @@
   <link rel="stylesheet" href="site.css">
 </head>
 <body>
-  <div id="remote-media"></div>
+
+
   <div id="controls">
     <div id="preview">
-      <p class="instructions">Hello Beautiful</p>
-      <div id="local-media"></div>
-      <button id="button-preview">Preview My Camera</button>
+      <div class="clearfix">
+        <div class="zone-wrap">
+          <!-- local -->
+          <div id="local-media"></div>
+          <canvas id="overlay" width="400" height="300"></canvas>
+          <canvas id="webgl" width="400" height="300"></canvas>
+        </div>
+        <div class="zone-wrap">
+          <div id="lineZone">
+            <p class="caption"><img src="./media/ja.png" class="line" /></p>
+            <img src="./media/line.png" id="lineAdd" />
+          </div>
+          <!-- remote -->
+          <div id="remote-media"></div>
+          <canvas id="overlay-remote" width="400" height="300"></canvas>
+          <canvas id="webgl-remote" width="400" height="300"></canvas>
+        </div>
+      </div>
     </div>
+    <div class="clearfix">
+			<select name="mask" id="selectmask">
+				<option value="0">Average face</option>
+				<option value="1">Mona Lisa</option>
+				<option value="2">Ironman</option>
+				<option value="3">Skull mask</option>
+				<option value="4">Sean Connery</option>
+				<option value="5">Audrey</option>
+				<option value="6">Cage</option>
+				<option value="7">Eye Shine</option>
+				<option value="8">Hentai Kamen</option>
+				<option value="9">Kamen</option>
+			</select>
+			<input class="btn" type="button" value="Enable Mask" id="startbutton"></input>
+    </div>
+    <img id="average" class="masks" src="./media/average.bmp"></img>
+    <img id="monalisa" class="masks" src="./media/joconde.jpg"></img>
+    <img id="ironman" class="masks" src="./media/ironman.jpg"></img>
+    <img id="sean" class="masks" src="./media/SeanConnery.jpg"></img>
+    <img id="skull" class="masks" src="./media/skullmask.jpg"></img>
+    <img id="audrey" class="masks" src="./media/audrey.jpg"></img>
+    <img id="cage2" class="masks" src="./media/cage.jpg"></img>
+    <img id="medake" class="masks" src="./media/medake2.png"></img>
+    <img id="medake2" class="masks" src="./media/medake5.png"></img>
+    <img id="medake4" class="masks" src="./media/medake4.png"></img>
+
+
     <div id="room-controls">
-      <p class="instructions">Room Name:</p>
-      <input id="room-name" type="text" placeholder="Enter a room name" />
-      <button id="button-join">Join Room</button>
-      <button id="button-leave">Leave Room</button>
+      <a href="javascript:void(0);" id="call-this-room">仲間を呼ぶ</a>
+      <button id="button-join">Enter Talk Room</button>
+      <button id="button-leave">Leave Talk Room</button>
     </div>
     <div id="log"></div>
   </div>
 
-  <script src="//media.twiliocdn.com/sdk/js/video/releases/1.0.0-beta2/twilio-video.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="quickstart.js"></script>
+  <script src="//media.twiliocdn.com/sdk/js/video/releases/1.0.0-beta2/twilio-video.js"></script>
+  <script src="//media.twiliocdn.com/sdk/js/sync/v0.3/twilio-sync.min.js"></script>
+
+  <!-- face -->
+  <script src="./ext_js/dat.gui.min.js"></script>
+  <script src="./ext_js/utils.js"></script>
+  <script src="./ext_js/jsfeat-min.js"></script>
+  <script src="./ext_js/frontalface.js"></script>
+  <script src="./ext_js/jsfeat_detect.js"></script>
+  <script src="./ext_js/numeric-1.2.6.min.js"></script>
+  <script src="./ext_js/mosse.js"></script>
+  <script src="./ext_js/left_eye_filter.js"></script>
+  <script src="./ext_js/right_eye_filter.js"></script>
+  <script src="./ext_js/nose_filter.js"></script>
+  <script src="./models/model_pca_20_svm.js"></script>
+  <script src="./js/clm.js"></script>
+  <script src="./js/svmfilter_webgl.js"></script>
+  <script src="./js/svmfilter_fft.js"></script>
+  <script src="./js/mossefilter.js"></script>
+  <script src="./js/face_deformer.js"></script>
+  <script src="face.js"></script>
 </body>
 </html>

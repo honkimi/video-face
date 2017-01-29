@@ -15,16 +15,18 @@ end
 # Generate a token for use in our Video application
 get '/token' do
   # Create a random username for the client
-  identity = Faker::Internet.user_name
+  identity = Faker::Internet.user_name + Time.new.to_i.to_s
 
   # Create an Access Token for Video usage
-  token = Twilio::Util::AccessToken.new ENV['TWILIO_ACCOUNT_SID'],
-  ENV['TWILIO_API_KEY'], ENV['TWILIO_API_SECRET'], 3600, identity
+  token = Twilio::JWT::AccessToken.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_API_KEY'], ENV['TWILIO_API_SECRET'], 3600, identity
+  video_grant = Twilio::JWT::AccessToken::ConversationsGrant.new
+  video_grant.configuration_profile_sid = ENV['TWILIO_CONFIGURATION_SID']
+  token.add_grant video_grant
 
-  # Grant access to Video
-  grant = Twilio::Util::AccessToken::VideoGrant.new
-  grant.configuration_profile_sid = ENV['TWILIO_CONFIGURATION_SID']
-  token.add_grant grant
+  sync_grant = Twilio::JWT::AccessToken::SyncGrant.new
+  sync_grant.service_sid = ENV['TWILIO_SYNC_SERVICE_SID']
+  sync_grant.endpoint_id = "TwilioDemoApp:#{identity}:browser"
+  token.add_grant sync_grant
 
   # Generate the token and send to client
   json :identity => identity, :token => token.to_jwt
